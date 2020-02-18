@@ -57,26 +57,6 @@ word_index = tokenizer.word_index
 sequences = tokenizer.texts_to_sequences(text_final)
 padded = pad_sequences(sequences, maxlen = max_length, truncating=trunc_type, padding='post')
 
-print("\nINFO: Loading Embedding")
-# Load embeddings
-embeddings_dictionary = dict()
-glove_file = open("glove.6B.100d.txt", encoding="utf8")
-
-for line in glove_file:
-    records = line.split()
-    word = records[0]
-    vector_dimensions = np.asarray(records[1:], dtype='float32')
-    embeddings_dictionary [word] = vector_dimensions
-glove_file.close()
-
-embedding_matrix = np.zeros((vocab_size, 100))
-for word, index in tokenizer.word_index.items():
-    embedding_vector = embeddings_dictionary.get(word)
-    if embedding_vector is not None:
-        embedding_matrix[index] = embedding_vector
-
-
-
 encoder = LabelBinarizer()
 y = encoder.fit_transform(y)
 
