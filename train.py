@@ -13,8 +13,15 @@ from sklearn.model_selection import train_test_split
 
 preprocess = Preprocess()
 utils = Utils()
+
+
+
+
+DATA_DIR = "../data"
+
+
 print("[INFO] Starting preprocessing")
-df = preprocess.getDataFrame("../data")
+df = preprocess.getDataFrame(DATA_DIR)
 
 y = df["label"].to_numpy()
 X = df["text"].to_numpy()
@@ -53,7 +60,7 @@ padded = pad_sequences(sequences, maxlen = max_length, truncating=trunc_type, pa
 print("\nINFO: Loading Embedding")
 # Load embeddings
 embeddings_dictionary = dict()
-glove_file = open("D:/Client_Project/Emotion Recognition/glove.6B.100d.txt", encoding="utf8")
+glove_file = open("glove.6B.100d.txt", encoding="utf8")
 
 for line in glove_file:
     records = line.split()
@@ -89,7 +96,7 @@ model = tf.keras.Sequential([
 ])
 
 model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
-num_epochs = 4
+num_epochs = 15
 history = model.fit(X_train, y_train, epochs=num_epochs, validation_data = (X_test, y_test))
 
 print("\nINFO: Saving Model")
