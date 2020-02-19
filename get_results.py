@@ -60,13 +60,16 @@ GET_PEOPLE = 5
 resultList = list(result[0])
 
 final = []
+
+
 for i in range(GET_PEOPLE):
     index = resultList.index(max(resultList))
     val = resultList.pop(index)
-    final.append(classNames[index])
+    final.append([classNames[index], val])
+
 
 with open("results.txt", "w+") as file:
     for name in final:
-        file.writelines(name + "\n")
+        file.writelines("{} - {}\n".format(name[0], round(name[1] * 200, 2)))
 
 print("[INFO] Results saved to 'results.txt'")
